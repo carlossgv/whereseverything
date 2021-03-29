@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './ImageContainer.css';
 
 const ImageContainer = (props) => {
@@ -10,6 +9,8 @@ const ImageContainer = (props) => {
       let posY = e.offsetY ? e.offsetY : e.pageY - img.offsetTop;
 
       console.log(posX, posY);
+
+      
     }
 
     if (e.button === 1) {
