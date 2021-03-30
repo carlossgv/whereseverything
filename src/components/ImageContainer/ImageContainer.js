@@ -1,16 +1,13 @@
 import React from 'react';
+import { placeSquare } from '../../Functions';
 import './ImageContainer.css';
 
 const ImageContainer = (props) => {
-  const handleOnContextMenu = (e) => {
+  const handleOnMouseDown = (e) => {
     const img = document.querySelector('#nonModalImage');
     if (e.button === 0 && e.target.id === 'nonModalImage') {
-      let posX = e.offsetX ? e.offsetX : e.pageX - img.offsetLeft;
-      let posY = e.offsetY ? e.offsetY : e.pageY - img.offsetTop;
 
-      console.log(posX, posY);
-
-      
+      placeSquare(e, img);
     }
 
     if (e.button === 1) {
@@ -26,9 +23,10 @@ const ImageContainer = (props) => {
   };
 
   return (
-    <div className="imageContainer" onMouseDown={handleOnContextMenu}>
-      <img id="nonModalImage" src={props.img} alt={props.alt} />
-
+    <div className="imageContainer" onMouseDown={handleOnMouseDown}>
+      <div className="image">
+        <img id="nonModalImage" src={props.img} alt={props.alt} />
+      </div>
       <div id="myModal" className="modal">
         <img
           className="modalContent"
