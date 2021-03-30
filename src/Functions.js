@@ -59,35 +59,13 @@ const checkClick = async (x, y, stuffToFind, imageName) => {
   }
 };
 
-const placeSquare = (e, img) => {
-  if (document.querySelector('.squareClick')) {
-    document.querySelector('.squareClick').remove();
-    document.querySelector('.optionsDiv').remove();
-  }
-
+const getCoordinates = (e, img) => {
   let posX = e.offsetX ? e.offsetX : e.pageX - img.offsetLeft;
   let posY = e.offsetY ? e.offsetY : e.pageY - img.offsetTop;
   let squareX = '';
   let squareY = '';
   let optionsX = '';
   let optionsY = '';
-
-  const square = document.createElement('div');
-  square.classList.add('squareClick');
-
-  const optionsDiv = document.createElement('div');
-  optionsDiv.classList.add('optionsDiv');
-  optionsDiv.style.position = 'absolute';
-
-  const testList = ['Box of Vinyls', 'fish', 'item 3', 'item 4', 'item 5'];
-
-  testList.forEach((item) => {
-    const itemDiv = document.createElement('div');
-    itemDiv.classList.add('option');
-    itemDiv.innerText = item;
-
-    optionsDiv.append(itemDiv);
-  });
 
   // square position rules
   if (posX > img.width - 23) {
@@ -119,18 +97,9 @@ const placeSquare = (e, img) => {
     optionsY = squareY - 104 + 46;
   }
 
-  square.style.left = `${squareX}px`;
-  square.style.top = `${squareY}px`;
-
-  optionsDiv.style.left = `${optionsX}px`;
-  optionsDiv.style.top = `${optionsY}px`;
-
-  const imageDiv = document.querySelector('.image');
-
-  imageDiv.appendChild(square);
-  imageDiv.appendChild(optionsDiv);
+  return { squareX, squareY, optionsX, optionsY };
 };
 
 // TODO: CREATE IMAGE FACTORY AND ADD ATTRIBUTES AND FUNCTIONS
 
-export { getImageInfo, checkClick, placeSquare };
+export { getImageInfo, checkClick, getCoordinates };
