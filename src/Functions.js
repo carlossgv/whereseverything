@@ -28,78 +28,80 @@ firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
 
-const getImageInfo = (imageName) => {
-  var image = db.collection('images').doc(imageName);
+const Image = (imageName) => {
+  const getImageData = (imageName) => {
+    var image = db.collection('images').doc(imageName);
+    let imageData = image
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          return doc.data();
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
+    return imageData;
+  };
 
-  let imageData = image
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        return doc.data();
-      } else {
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
+  const checkClick = async (x, y, stuffToFind, imageName) => {
+    const imageData = await getImageData(imageName);
+
+    for (const stuff in imageData) {
+      if (stuff === stuffToFind) {
+        console.log(imageData[stuff].name);
+        return imageData[stuff].name;
       }
-    })
-    .catch((error) => {
-      console.log('Error getting document:', error);
-    });
-
-  return imageData;
-};
-
-const checkClick = async (x, y, stuffToFind, imageName) => {
-  const imageData = await getImageInfo(imageName);
-
-  for (const stuff in imageData) {
-    if (stuff === stuffToFind) {
-      console.log(imageData[stuff].name);
-      return imageData[stuff].name;
     }
-  }
-};
+  };
 
-const getCoordinates = (e, img) => {
-  let posX = e.offsetX ? e.offsetX : e.pageX - img.offsetLeft;
-  let posY = e.offsetY ? e.offsetY : e.pageY - img.offsetTop;
-  let squareX = '';
-  let squareY = '';
-  let optionsX = '';
-  let optionsY = '';
+  const getCoordinates = (e, img) => {
+    let posX = e.offsetX ? e.offsetX : e.pageX - img.offsetLeft;
+    let posY = e.offsetY ? e.offsetY : e.pageY - img.offsetTop;
+    let squareX = '';
+    let squareY = '';
+    let optionsX = '';
+    let optionsY = '';
 
-  // square position rules
-  if (posX > img.width - 23) {
-    squareX = img.width - 47 + img.offsetLeft;
-  } else if (posX < 46) {
-    squareX = img.offsetLeft;
-    optionsX = squareX + 50;
-  } else {
-    squareX = posX - 20 + img.offsetLeft;
-    optionsX = squareX + 50;
-  }
+    // square position rules
+    if (posX > img.width - 23) {
+      squareX = img.width - 47 + img.offsetLeft;
+    } else if (posX < 46) {
+      squareX = img.offsetLeft;
+      optionsX = squareX + 50;
+    } else {
+      squareX = posX - 20 + img.offsetLeft;
+      optionsX = squareX + 50;
+    }
 
-  if (posY > img.height - 23) {
-    squareY = img.height - 47 + img.offsetTop;
-  } else if (posY < 46) {
-    squareY = img.offsetTop;
-    optionsY = img.offsetTop;
-  } else {
-    squareY = posY - 20 + img.offsetTop;
-    optionsY = squareY;
-  }
+    if (posY > img.height - 23) {
+      squareY = img.height - 47 + img.offsetTop;
+    } else if (posY < 46) {
+      squareY = img.offsetTop;
+      optionsY = img.offsetTop;
+    } else {
+      squareY = posY - 20 + img.offsetTop;
+      optionsY = squareY;
+    }
 
-  // option list position rules
-  if (posX > img.width - 46) {
-    optionsX = squareX - 124;
-  }
+    // option list position rules
+    if (posX > img.width - 46) {
+      optionsX = squareX - 124;
+    }
 
-  if (posY > img.height - 104) {
-    optionsY = squareY - 104 + 46;
-  }
+    if (posY > img.height - 104) {
+      optionsY = squareY - 104 + 46;
+    }
 
-  return { squareX, squareY, optionsX, optionsY };
+    return { posX, posY, squareX, squareY, optionsX, optionsY };
+  };
+
+  return { getImageData, getCoordinates, checkClick };
 };
 
 // TODO: CREATE IMAGE FACTORY AND ADD ATTRIBUTES AND FUNCTIONS
 
-export { getImageInfo, checkClick, getCoordinates };
+export { Image };
