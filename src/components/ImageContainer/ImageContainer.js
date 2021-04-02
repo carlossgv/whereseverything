@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import OptionsSquare from '../OptionsSquare/OptionsSquare';
 import './ImageContainer.css';
 
-const ImageContainer = (props) => {
+const ImageContainer = ({ image, imageName, url, options, alt }) => {
   const [coordinates, setCoordinates] = useState({
     squareX: '',
     squareY: '',
@@ -11,15 +11,16 @@ const ImageContainer = (props) => {
   });
   const [visibility, setVisibility] = useState('hidden');
 
-  console.log(props.options);
-
   const handleOnMouseDown = (e) => {
-    const img = document.querySelector('#nonModalImage');
     if (e.button === 0 && e.target.id === 'nonModalImage') {
+      const img = document.querySelector('#nonModalImage');
       setVisibility('hidden');
 
-      const returnedCoordinates = Image.getCoordinates(e, img);
+      const returnedCoordinates = image.getCoordinates(e, img);
+      console.log(returnedCoordinates.posX, returnedCoordinates.posY);
       setCoordinates({
+        posX: returnedCoordinates.posX,
+        posY: returnedCoordinates.posY,
         squareX: returnedCoordinates.squareX,
         squareY: returnedCoordinates.squareY,
         optionsX: returnedCoordinates.optionsX,
@@ -40,21 +41,28 @@ const ImageContainer = (props) => {
     }
   };
 
+  const handleOptionsClick = (e) => {
+    console.log(e.target.innerHTML);
+    const selection = e.target.innerHTML;
+    image.checkClick(coordinates.posX, coordinates.posY, selection, imageName);
+  };
+
   return (
     <div className="imageContainer" onMouseDown={handleOnMouseDown}>
       <div className="image">
-        <img id="nonModalImage" src={props.img} alt={props.alt} />
+        <img id="nonModalImage" src={url} alt={alt} />
         <OptionsSquare
           visibility={visibility}
           coordinates={coordinates}
-          options={props.options}
+          options={options}
+          handleOptionsClick={handleOptionsClick}
         />
       </div>
       <div id="myModal" className="modal">
         <img
           className="modalContent"
           id="modalImage"
-          alt={`${props.alt} zoomed`}
+          alt={`${alt} zoomed`}
         ></img>
 
         <div id="caption"></div>

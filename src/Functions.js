@@ -51,9 +51,24 @@ const Image = (imageName) => {
     const imageData = await getImageData(imageName);
 
     for (const stuff in imageData) {
-      if (stuff === stuffToFind) {
-        console.log(imageData[stuff].name);
-        return imageData[stuff].name;
+      if (imageData[stuff].name === stuffToFind) {
+        console.log(imageData[stuff]);
+        console.log(
+          x,
+          y,
+          imageData[stuff].coordinates.x,
+          imageData[stuff].coordinates.y,
+          imageData[stuff].offset.x,
+          imageData[stuff].offset.y
+        );
+        if (
+          Math.abs(x - imageData[stuff].coordinates.x) <
+            imageData[stuff].offset.x &&
+          Math.abs(y - imageData[stuff].coordinates.y) <
+            imageData[stuff].offset.y
+        ) {
+          console.log(`${stuffToFind} found!`);
+        }
       }
     }
   };

@@ -1,9 +1,7 @@
 import React from 'react';
 import './OptionsSquare.css';
 
-const OptionsSquare = (props) => {
-  const { visibility, coordinates, options } = props;
-
+const OptionsSquare = ({ visibility, coordinates, options, handleOptionsClick }) => {
   return (
     <div className="optionsSquare">
       <div
@@ -22,8 +20,8 @@ const OptionsSquare = (props) => {
       >
         <ul>
           {options.map((option) => (
-            <li key={option} className="option">
-              {option}
+            <li key={option.name} className="option" onClick={handleOptionsClick}>
+              {option.name}
             </li>
           ))}
         </ul>
