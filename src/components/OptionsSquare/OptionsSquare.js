@@ -1,7 +1,12 @@
 import React from 'react';
 import './OptionsSquare.css';
 
-const OptionsSquare = ({ visibility, coordinates, options, handleOptionsClick }) => {
+const OptionsSquare = ({
+  visibility,
+  coordinates,
+  options,
+  handleOptionsClick,
+}) => {
   return (
     <div className="optionsSquare">
       <div
@@ -19,11 +24,22 @@ const OptionsSquare = ({ visibility, coordinates, options, handleOptionsClick })
         }}
       >
         <ul>
-          {options.map((option) => (
-            <li key={option.name} className="option" onClick={handleOptionsClick}>
-              {option.name}
-            </li>
-          ))}
+          {options.map((option) => {
+            let locatedClass = '';
+            if (option.isLocated) {
+              locatedClass = 'isLocated';
+            }
+
+            return (
+              <li
+                key={option.name}
+                className={`option ${locatedClass}`}
+                onClick={handleOptionsClick}
+              >
+                {option.name}
+              </li>
+            );
+          })}
         </ul>
       </div>
     </div>

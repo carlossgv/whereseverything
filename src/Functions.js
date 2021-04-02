@@ -47,30 +47,26 @@ const Image = (imageName) => {
     return imageData;
   };
 
-  const checkClick = async (x, y, stuffToFind, imageName) => {
-    const imageData = await getImageData(imageName);
-
+  const checkClick = (x, y, stuffToFind, imageName, imageData) => {
+    // const couldImageData = await getImageData(imageName);
+    console.log(imageData);
     for (const stuff in imageData) {
+      console.log(imageData[stuff]);
       if (imageData[stuff].name === stuffToFind) {
-        console.log(imageData[stuff]);
-        console.log(
-          x,
-          y,
-          imageData[stuff].coordinates.x,
-          imageData[stuff].coordinates.y,
-          imageData[stuff].offset.x,
-          imageData[stuff].offset.y
-        );
         if (
           Math.abs(x - imageData[stuff].coordinates.x) <
             imageData[stuff].offset.x &&
           Math.abs(y - imageData[stuff].coordinates.y) <
             imageData[stuff].offset.y
         ) {
+          imageData[stuff].isLocated = true;
+          console.log(imageData[stuff]);
           console.log(`${stuffToFind} found!`);
         }
       }
     }
+
+    return imageData;
   };
 
   const getCoordinates = (e, img) => {
@@ -103,7 +99,7 @@ const Image = (imageName) => {
     }
 
     // option list position rules
-    if (posX > img.width - 46) {
+    if (posX > img.width - 170) {
       optionsX = squareX - 124;
     }
 

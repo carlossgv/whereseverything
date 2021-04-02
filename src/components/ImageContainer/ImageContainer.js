@@ -10,6 +10,9 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
     optionsY: '',
   });
   const [visibility, setVisibility] = useState('hidden');
+  const [containerOptions, setContainerOptions] = useState(options);
+
+  console.log(containerOptions);
 
   const handleOnMouseDown = (e) => {
     if (e.button === 0 && e.target.id === 'nonModalImage') {
@@ -17,7 +20,9 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
       setVisibility('hidden');
 
       const returnedCoordinates = image.getCoordinates(e, img);
+
       console.log(returnedCoordinates.posX, returnedCoordinates.posY);
+
       setCoordinates({
         posX: returnedCoordinates.posX,
         posY: returnedCoordinates.posY,
@@ -42,9 +47,25 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
   };
 
   const handleOptionsClick = (e) => {
-    console.log(e.target.innerHTML);
     const selection = e.target.innerHTML;
-    image.checkClick(coordinates.posX, coordinates.posY, selection, imageName);
+    console.log(e.target.innerHTML);
+
+    const newOptionsObject = image.checkClick(
+      coordinates.posX,
+      coordinates.posY,
+      selection,
+      imageName,
+      options
+    );
+
+    const newOptionsArray = [];
+
+    for (const option in newOptionsObject) {
+      newOptionsArray.push(newOptionsObject[option]);
+    }
+
+    console.log(newOptionsArray);
+    setContainerOptions(newOptionsArray);
   };
 
   return (
@@ -54,7 +75,7 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
         <OptionsSquare
           visibility={visibility}
           coordinates={coordinates}
-          options={options}
+          options={containerOptions}
           handleOptionsClick={handleOptionsClick}
         />
       </div>

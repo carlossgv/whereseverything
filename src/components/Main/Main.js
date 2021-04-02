@@ -12,14 +12,14 @@ const Main = () => {
   const imageName = 'showsImage';
 
   useEffect(() => {
+    console.log('rebooting options list')
     const imageObject = Image('showsImage');
-    // const imageName = 'showsImage';
 
     import(`../../static/images/${imageName}.jpg`).then((imageFile) => {
       setImage({ url: imageFile.default, Image: imageObject });
     });
 
-    async function testFunc(imageName) {
+    async function createOptionsArray(imageName) {
       const imageOptions = await imageObject.getImageData(imageName);
 
       const asyncOptions = [];
@@ -27,12 +27,12 @@ const Main = () => {
       for (const option in imageOptions) {
         asyncOptions.push(imageOptions[option]);
       }
+      console.log(asyncOptions);
       setOptions(asyncOptions);
     }
 
-    testFunc(imageName);
+    createOptionsArray(imageName);
   }, []);
-
 
   return (
     <div className="Main">
