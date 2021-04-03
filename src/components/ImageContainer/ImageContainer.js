@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import FinishContainer from '../FinishContainer/FinishContainer';
 import OptionsSquare from '../OptionsSquare/OptionsSquare';
 import './ImageContainer.css';
 
@@ -11,6 +12,7 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
   });
   const [visibility, setVisibility] = useState('hidden');
   const [containerOptions, setContainerOptions] = useState(options);
+  const [isFinished, setIsFinished] = useState(null);
 
   console.log(containerOptions);
 
@@ -20,8 +22,6 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
       setVisibility('hidden');
 
       const returnedCoordinates = image.getCoordinates(e, img);
-
-      console.log(returnedCoordinates.posX, returnedCoordinates.posY);
 
       setCoordinates({
         posX: returnedCoordinates.posX,
@@ -47,14 +47,14 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
   };
 
   const handleOptionsClick = (e) => {
+    setIsFinished(false);
+
     const selection = e.target.innerHTML;
-    console.log(e.target.innerHTML);
 
     const newOptionsObject = image.checkClick(
       coordinates.posX,
       coordinates.posY,
       selection,
-      imageName,
       options
     );
 
@@ -64,12 +64,22 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
       newOptionsArray.push(newOptionsObject[option]);
     }
 
-    console.log(newOptionsArray);
     setContainerOptions(newOptionsArray);
+
+    console.log(newOptionsArray);
+
+    //TODO: CHECK IF ALL STUFF IS LOCATED
+    const isFinished = image.checkIsFinished(newOptionsArray);
+    console.log(isFinished);
+    if (isFinished) {
+      setVisibility('hidden');
+    }
+    setIsFinished(isFinished);
   };
 
   return (
     <div className="imageContainer" onMouseDown={handleOnMouseDown}>
+      {isFinished && <FinishContainer display={'block'} />}
       <div className="image">
         <img id="nonModalImage" src={url} alt={alt} />
         <OptionsSquare

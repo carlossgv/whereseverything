@@ -27,6 +27,6 @@ ul {
 }
 
 .isLocated {
-  background: green;
+  background: greenyellow;
   pointer-events: none;
 }

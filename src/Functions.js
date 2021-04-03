@@ -47,11 +47,8 @@ const Image = (imageName) => {
     return imageData;
   };
 
-  const checkClick = (x, y, stuffToFind, imageName, imageData) => {
-    // const couldImageData = await getImageData(imageName);
-    console.log(imageData);
+  const checkClick = (x, y, stuffToFind, imageData) => {
     for (const stuff in imageData) {
-      console.log(imageData[stuff]);
       if (imageData[stuff].name === stuffToFind) {
         if (
           Math.abs(x - imageData[stuff].coordinates.x) <
@@ -60,13 +57,21 @@ const Image = (imageName) => {
             imageData[stuff].offset.y
         ) {
           imageData[stuff].isLocated = true;
-          console.log(imageData[stuff]);
-          console.log(`${stuffToFind} found!`);
         }
       }
     }
+    console.log(imageData);
 
     return imageData;
+  };
+
+  const checkIsFinished = (optionsArray) => {
+    for (const stuff in optionsArray) {
+      if (!optionsArray[stuff].isLocated) {
+        return false;
+      }
+    }
+    return true;
   };
 
   const getCoordinates = (e, img) => {
@@ -110,7 +115,7 @@ const Image = (imageName) => {
     return { posX, posY, squareX, squareY, optionsX, optionsY };
   };
 
-  return { getImageData, getCoordinates, checkClick };
+  return { getImageData, getCoordinates, checkClick, checkIsFinished };
 };
 
 // TODO: CREATE IMAGE FACTORY AND ADD ATTRIBUTES AND FUNCTIONS
