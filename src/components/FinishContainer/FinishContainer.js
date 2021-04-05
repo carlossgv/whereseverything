@@ -1,8 +1,19 @@
 import './FinishContainer.css';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Timer from '../Timer/Timer';
+import { checkCookie } from '../../Functions';
 
-const FinishContainer = ({ time }) => {
+const FinishContainer = ({ imageName, time }) => {
+  useEffect(() => {
+    if (time !== 0) {
+      checkCookie(imageName, time);
+    }
+
+    // return () => {
+    //   cleanup;
+    // };
+  }, [time]);
+
   return (
     <div id="myModal" className="finishContainer">
       <div className="modal-content" id="caption">

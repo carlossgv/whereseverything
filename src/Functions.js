@@ -29,6 +29,8 @@ firebase.initializeApp(firebaseConfig);
 var db = firebase.firestore();
 
 const Image = (imageName) => {
+  const name = imageName;
+
   const getImageData = (imageName) => {
     var image = db.collection('images').doc(imageName);
     let imageData = image
@@ -115,9 +117,95 @@ const Image = (imageName) => {
     return { posX, posY, squareX, squareY, optionsX, optionsY };
   };
 
-  return { getImageData, getCoordinates, checkClick, checkIsFinished };
+  return { name, getImageData, getCoordinates, checkClick, checkIsFinished };
 };
 
-// TODO: CREATE IMAGE FACTORY AND ADD ATTRIBUTES AND FUNCTIONS
+// Cookies functions from W3 School https://www.w3schools.com/js/js_cookies.asp
+function setCookie(cid, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  var expires = 'expires=' + d.toUTCString();
+  document.cookie = cid + '=' + cvalue + ';' + expires + ';path=/';
+}
 
-export { Image };
+function getCookie(cid) {
+  var name = cid + '=';
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for (var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) === ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) === 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return '';
+}
+
+function checkCookie(imageName, time) {
+  var id = getCookie('id');
+  console.log(id, imageName, time);
+
+  if (id !== '') {
+    var docRef = db.collection('users').doc(id);
+
+    docRef
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data());
+
+          let name = doc.data().name;
+          let scores = doc.data().scores;
+
+          if (time < scores[imageName]) {
+            scores[imageName] = time;
+            console.log('new record!');
+          }
+
+          db.collection('users')
+            .doc(id)
+            .set({
+              name: name,
+              scores,
+            })
+            .then(() => {
+              console.log('Document successfully written!');
+            })
+            .catch((error) => {
+              console.error('Error writing document: ', error);
+            });
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
+
+    // Add a new document in collection "users"
+  } else {
+    const name = prompt('Please enter your name:', '');
+    let scores = {};
+    scores[imageName] = time;
+
+    // Add a new document with a generated id.
+    db.collection('users')
+      .add({
+        name: name,
+        scores,
+      })
+      .then((docRef) => {
+        console.log('Document written with ID: ', docRef.id);
+        setCookie('id', docRef.id, 365);
+      })
+      .catch((error) => {
+        console.error('Error adding document: ', error);
+      });
+  }
+}
+
+export { Image, setCookie, getCookie, checkCookie };

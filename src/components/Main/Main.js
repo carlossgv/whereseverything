@@ -34,11 +34,8 @@ const Main = () => {
     createOptionsArray(imageName);
   }, []);
 
-  
-
   return (
     <div className="Main">
-      
       {options && (
         <ImageContainer
           image={image.Image}

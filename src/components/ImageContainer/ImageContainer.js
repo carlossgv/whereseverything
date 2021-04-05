@@ -85,7 +85,7 @@ const ImageContainer = ({ image, url, options, alt }) => {
 
   return (
     <div className="imageContainer" onMouseDown={handleOnMouseDown}>
-      {isFinished && <FinishContainer display={'block'} time={time} />}
+      {isFinished && <FinishContainer display={'block'} imageName={image.name} time={time} />}
       <StopWatch isFinished={isFinished} logTime={logTime} />
       <div className="image">
         <img id="nonModalImage" src={url} alt={alt} />
