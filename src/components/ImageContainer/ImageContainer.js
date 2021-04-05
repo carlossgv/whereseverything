@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import FinishContainer from '../FinishContainer/FinishContainer';
 import OptionsSquare from '../OptionsSquare/OptionsSquare';
 import './ImageContainer.css';
+import StopWatch from '../Stopwatch/Stopwatch';
 
-const ImageContainer = ({ image, imageName, url, options, alt }) => {
+const ImageContainer = ({ image, url, options, alt }) => {
   const [coordinates, setCoordinates] = useState({
     squareX: '',
     squareY: '',
@@ -13,7 +14,7 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
   const [visibility, setVisibility] = useState('hidden');
   const [containerOptions, setContainerOptions] = useState(options);
   const [isFinished, setIsFinished] = useState(null);
-
+  const [time, setTime] = useState(0);
   console.log(containerOptions);
 
   const handleOnMouseDown = (e) => {
@@ -73,13 +74,19 @@ const ImageContainer = ({ image, imageName, url, options, alt }) => {
     console.log(isFinished);
     if (isFinished) {
       setVisibility('hidden');
+      console.log(time);
     }
     setIsFinished(isFinished);
   };
 
+  const logTime = (time) => {
+    setTime(time);
+  };
+
   return (
     <div className="imageContainer" onMouseDown={handleOnMouseDown}>
-      {isFinished && <FinishContainer display={'block'} />}
+      {isFinished && <FinishContainer display={'block'} time={time} />}
+      <StopWatch isFinished={isFinished} logTime={logTime} />
       <div className="image">
         <img id="nonModalImage" src={url} alt={alt} />
         <OptionsSquare

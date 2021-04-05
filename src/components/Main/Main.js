@@ -12,7 +12,7 @@ const Main = () => {
   const imageName = 'showsImage';
 
   useEffect(() => {
-    console.log('rebooting options list')
+    console.log('rebooting options list');
     const imageObject = Image('showsImage');
 
     import(`../../static/images/${imageName}.jpg`).then((imageFile) => {
@@ -34,8 +34,11 @@ const Main = () => {
     createOptionsArray(imageName);
   }, []);
 
+  
+
   return (
     <div className="Main">
+      
       {options && (
         <ImageContainer
           image={image.Image}
