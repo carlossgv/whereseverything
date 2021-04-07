@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Image } from '../../Functions';
-import ImageContainer from '../ImageContainer/ImageContainer';
+import ImagesCarousel from '../ImagesCarousel/ImagesCarousel';
 
 const Main = () => {
   const [options, setOptions] = useState(null);
@@ -36,15 +36,7 @@ const Main = () => {
 
   return (
     <div className="Main">
-      {/* {options && (
-        <ImageContainer
-          image={image.Image}
-          url={image.url}
-          options={options}
-          alt={imageName}
-          imageName={imageName}
-        />
-      )} */}
+      <ImagesCarousel />
     </div>
   );
 };

@@ -27,6 +27,29 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
+var storage = firebase.storage();
+
+const getImageUrl = (imageName) => {
+  imageName.forEach((imageName) => {
+    // Create a reference from a Google Cloud Storage URI
+    var gsReference = storage.refFromURL(
+      `gs://whereswaldo-carlossgv.appspot.com/images/${imageName}.jpg`
+    );
+
+    gsReference
+      .child(`images/${imageName}.jpg`)
+      .getDownloadURL()
+      .then((url) => {
+        // `url` is the download URL for 'images/stars.jpg'
+
+        return url;
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.log(error);
+      });
+  });
+};
 
 const Image = (imageName) => {
   const name = imageName;
@@ -208,4 +231,4 @@ function checkCookie(imageName, time) {
   }
 }
 
-export { Image, setCookie, getCookie, checkCookie };
+export { Image, setCookie, getCookie, checkCookie, getImageUrl };
