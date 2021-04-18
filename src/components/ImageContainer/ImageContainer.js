@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import FinishContainer from '../FinishContainer/FinishContainer';
 import OptionsSquare from '../OptionsSquare/OptionsSquare';
 import './ImageContainer.css';
 import StopWatch from '../Stopwatch/Stopwatch';
+import { useLocation } from 'react-router-dom'
 
-const ImageContainer = ({ image, url, options, alt }) => {
+
+const ImageContainer = () => {
   const [coordinates, setCoordinates] = useState({
     squareX: '',
     squareY: '',
@@ -12,10 +14,46 @@ const ImageContainer = ({ image, url, options, alt }) => {
     optionsY: '',
   });
   const [visibility, setVisibility] = useState('hidden');
-  const [containerOptions, setContainerOptions] = useState(options);
+  // const [containerOptions, setContainerOptions] = useState(options);
   const [isFinished, setIsFinished] = useState(null);
   const [time, setTime] = useState(0);
-  console.log(containerOptions);
+  const [options, setOptions] = useState(null);
+  const [image, setImage] = useState({
+    url: '',
+    Image: '',
+  });
+  console.log(options);
+
+  
+  function HeaderView() {
+    const location = useLocation();
+    return location.pathname.split('/')[2]
+  }
+
+  const imageName = HeaderView();
+
+  useEffect(() => {
+    console.log('rebooting options list');
+    const imageObject = Image('showsImage');
+
+    import(`../../static/images/${imageName}.jpg`).then((imageFile) => {
+      setImage({ url: imageFile.default, Image: imageObject });
+    });
+
+    async function createOptionsArray(imageName) {
+      const imageOptions = await imageObject.getImageData(imageName);
+
+      const asyncOptions = [];
+
+      for (const option in imageOptions) {
+        asyncOptions.push(imageOptions[option]);
+      }
+      console.log(asyncOptions);
+      setOptions(asyncOptions);
+    }
+
+    createOptionsArray(imageName);
+  }, []);
 
   const handleOnMouseDown = (e) => {
     if (e.button === 0 && e.target.id === 'nonModalImage') {
@@ -65,7 +103,7 @@ const ImageContainer = ({ image, url, options, alt }) => {
       newOptionsArray.push(newOptionsObject[option]);
     }
 
-    setContainerOptions(newOptionsArray);
+    setOptions(newOptionsArray);
 
     console.log(newOptionsArray);
 
@@ -88,11 +126,11 @@ const ImageContainer = ({ image, url, options, alt }) => {
       {isFinished && <FinishContainer display={'block'} imageName={image.name} time={time} />}
       <StopWatch isFinished={isFinished} logTime={logTime} />
       <div className="image">
-        <img id="nonModalImage" src={url} alt={alt} />
+        <img id="nonModalImage" src={image.url} alt={image.Image.alt} />
         <OptionsSquare
           visibility={visibility}
           coordinates={coordinates}
-          options={containerOptions}
+          options={options}
           handleOptionsClick={handleOptionsClick}
         />
       </div>
@@ -100,7 +138,7 @@ const ImageContainer = ({ image, url, options, alt }) => {
         <img
           className="modalContent"
           id="modalImage"
-          alt={`${alt} zoomed`}
+          alt={`${image.Image.alt} zoomed`}
         ></img>
 
         <div id="caption"></div>

@@ -3,36 +3,36 @@ import { Image } from '../../Functions';
 import ImagesCarousel from '../ImagesCarousel/ImagesCarousel';
 
 const Main = () => {
-  const [options, setOptions] = useState(null);
-  const [image, setImage] = useState({
-    url: '',
-    Image: '',
-  });
+  // const [options, setOptions] = useState(null);
+  // const [image, setImage] = useState({
+  //   url: '',
+  //   Image: '',
+  // });
 
-  const imageName = 'showsImage';
+  // const imageName = 'showsImage';
 
-  useEffect(() => {
-    console.log('rebooting options list');
-    const imageObject = Image('showsImage');
+  // useEffect(() => {
+  //   console.log('rebooting options list');
+  //   const imageObject = Image('showsImage');
 
-    import(`../../static/images/${imageName}.jpg`).then((imageFile) => {
-      setImage({ url: imageFile.default, Image: imageObject });
-    });
+  //   import(`../../static/images/${imageName}.jpg`).then((imageFile) => {
+  //     setImage({ url: imageFile.default, Image: imageObject });
+  //   });
 
-    async function createOptionsArray(imageName) {
-      const imageOptions = await imageObject.getImageData(imageName);
+  //   async function createOptionsArray(imageName) {
+  //     const imageOptions = await imageObject.getImageData(imageName);
 
-      const asyncOptions = [];
+  //     const asyncOptions = [];
 
-      for (const option in imageOptions) {
-        asyncOptions.push(imageOptions[option]);
-      }
-      console.log(asyncOptions);
-      setOptions(asyncOptions);
-    }
+  //     for (const option in imageOptions) {
+  //       asyncOptions.push(imageOptions[option]);
+  //     }
+  //     console.log(asyncOptions);
+  //     setOptions(asyncOptions);
+  //   }
 
-    createOptionsArray(imageName);
-  }, []);
+  //   createOptionsArray(imageName);
+  // }, []);
 
   return (
     <div className="Main">
