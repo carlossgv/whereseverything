@@ -36,7 +36,7 @@ const Main = () => {
 
   return (
     <div className="Main">
-      {/* {options && (
+      {options && (
         <ImageContainer
           image={image.Image}
           url={image.url}
@@ -44,7 +44,7 @@ const Main = () => {
           alt={imageName}
           imageName={imageName}
         />
-      )} */}
+      )}
     </div>
   );
 };
