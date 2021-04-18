@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Carousel, { Dots } from '@brainhubeu/react-carousel';
 import '@brainhubeu/react-carousel/lib/style.css';
 import './ImagesCarousel.css';
-import { getImageUrl } from '../../Functions';
 import fantasyImage from '../../static/images/fantasyImage.jpg';
 import showsImage from '../../static/images/showsImage.jpg';
 import spaceImage from '../../static/images/spaceImage.jpg';
 import underWaterImage from '../../static/images/underWaterImage.jpg';
+import { Link } from 'react-router-dom';
 
 const MyCarousel = () => {
   const [value, setValue] = useState(0);
-  const [imageArray, setImageArray] = useState(null);
 
   const onChange = (value) => {
     setValue(value);
   };
 
   const imageList = [
-    'fantasyImage',
-    'showsImage',
-    'spaceImage',
-    'underWaterImage',
+    { url: fantasyImage, name: Object.keys({ fantasyImage }) },
+    { url: showsImage, name: Object.keys({ showsImage }) },
+    { url: spaceImage, name: Object.keys({ spaceImage }) },
+    { url: underWaterImage, name: Object.keys({ underWaterImage }) },
   ];
 
   // useEffect(() => {
@@ -42,8 +41,6 @@ const MyCarousel = () => {
   //   setImageArray(imageDivs);
   // }, []);
 
-  console.log(imageArray);
-
   return (
     <div>
       <Carousel
@@ -54,11 +51,17 @@ const MyCarousel = () => {
         onChange={onChange}
         plugins={['arrows']}
       >
-        {/* {imageArray} */}
-        <img className="carouselImg" src={fantasyImage} alt={''} />
+        {imageList.map((image) => {
+          return (
+            <Link to={`/image/${image.name}`}>
+              <img className="carouselImg" src={image.url} alt={''} />
+            </Link>
+          );
+        })}
+        {/* <img className="carouselImg" src={fantasyImage} alt={''} />
         <img className="carouselImg" src={underWaterImage} alt={''} />
         <img className="carouselImg" src={showsImage} alt={''} />
-        <img className="carouselImg" src={spaceImage} alt={''} />
+        <img className="carouselImg" src={spaceImage} alt={''} /> */}
       </Carousel>
       <Dots value={value} onChange={onChange} number={4} />
     </div>
