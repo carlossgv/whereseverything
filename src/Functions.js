@@ -9,6 +9,7 @@ import 'firebase/analytics';
 // Add the Firebase products that you want to use
 import 'firebase/auth';
 import 'firebase/firestore';
+import 'firebase/storage';
 
 // TODO: Replace the following with your app's Firebase project configuration
 // For Firebase JavaScript SDK v7.20.0 and later, `measurementId` is an optional field
@@ -27,28 +28,27 @@ const firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 
 var db = firebase.firestore();
+// var storage = require('@google-cloud/storage');
 var storage = firebase.storage();
 
-const getImageUrl = (imageName) => {
-  imageName.forEach((imageName) => {
-    // Create a reference from a Google Cloud Storage URI
-    var gsReference = storage.refFromURL(
-      `gs://whereswaldo-carlossgv.appspot.com/images/${imageName}.jpg`
-    );
+const getImageUrl = async (imageName) => {
+  // Create a reference from a Google Cloud Storage URI
+  var gsReference = storage.refFromURL(
+    `gs://whereswaldo-carlossgv.appspot.com/`
+  );
 
-    gsReference
-      .child(`images/${imageName}.jpg`)
-      .getDownloadURL()
-      .then((url) => {
-        // `url` is the download URL for 'images/stars.jpg'
-
-        return url;
-      })
-      .catch((error) => {
-        // Handle any errors
-        console.log(error);
-      });
-  });
+  gsReference
+    .child(`images/${imageName}.jpg`)
+    .getDownloadURL()
+    .then((url) => {
+      // `url` is the download URL for 'images/stars.jpg'
+      console.log(url);
+      return url;
+    })
+    .catch((error) => {
+      // Handle any errors
+      console.log(error);
+    });
 };
 
 const Image = (imageName) => {
