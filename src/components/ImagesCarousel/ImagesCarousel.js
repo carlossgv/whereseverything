@@ -25,7 +25,7 @@ const MyCarousel = () => {
   ];
 
   return (
-    <div>
+    <div className='mainCarousel'>
       <Carousel
         arrows
         infinite

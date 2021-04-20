@@ -1,3 +1,8 @@
+.mainCarousel {
+  position: relative;
+  top: 50%;
+}
+
 .carouselImg {
   max-height: 500px;
 }
