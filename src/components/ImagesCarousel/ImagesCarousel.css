@@ -6,3 +6,15 @@
   margin: auto;
   max-width: 1000px;
 }
+
+.BrainhubCarousel__container {
+  min-width: 1000px;
+}
+
+.BrainhubCarousel__dots {
+  min-width: 1000px;
+}
+
+.BrainhubCarousel__arrows {
+  background: #fb836f;
+}

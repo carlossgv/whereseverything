@@ -15,31 +15,14 @@ const MyCarousel = () => {
     setValue(value);
   };
 
+  // TODO: GET IMAGE LIST DINAMICALLY FROM FIREBASE
+
   const imageList = [
     { url: fantasyImage, name: Object.keys({ fantasyImage }) },
     { url: showsImage, name: Object.keys({ showsImage }) },
     { url: spaceImage, name: Object.keys({ spaceImage }) },
     { url: underWaterImage, name: Object.keys({ underWaterImage }) },
   ];
-
-  // useEffect(() => {
-  //   const imageDivs = Promise.all(
-  //     imageList.map(async (imageName) => {
-  //       const imgUrl = await getImageUrl(imageName);
-  //       console.log(imgUrl);
-  //       return (
-  //         <img
-  //           key={imageName}
-  //           className="carouselImg"
-  //           src={imgUrl}
-  //           alt={imageName}
-  //         />
-  //       );
-  //     })
-  //   );
-  //   console.log(imageDivs);
-  //   setImageArray(imageDivs);
-  // }, []);
 
   return (
     <div>
@@ -53,15 +36,11 @@ const MyCarousel = () => {
       >
         {imageList.map((image) => {
           return (
-            <Link to={`/image/${image.name}`}>
+            <Link to={`/image/${image.name}`} key={image.name}>
               <img className="carouselImg" src={image.url} alt={''} />
             </Link>
           );
         })}
-        {/* <img className="carouselImg" src={fantasyImage} alt={''} />
-        <img className="carouselImg" src={underWaterImage} alt={''} />
-        <img className="carouselImg" src={showsImage} alt={''} />
-        <img className="carouselImg" src={spaceImage} alt={''} /> */}
       </Carousel>
       <Dots value={value} onChange={onChange} number={4} />
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Timer from '../Timer/Timer';
+import './Stopwatch.css'
 
 function StopWatch(props) {
   const [isActive, setIsActive] = useState(false);
@@ -44,7 +45,7 @@ function StopWatch(props) {
   };
 
   return (
-    <div className="stop-watch">
+    <div className="stopWatch">
       <Timer time={time} />
     </div>
   );

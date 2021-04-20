@@ -1,5 +1,36 @@
 nav {
+  background: #7e549f;
+  height: 50px;
+  width: 100vw;
+  color: #e3dac9;
+}
+
+.navContent {
   display: flex;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: auto;
+  line-height: 50px;
+}
+
+.navContent h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin: 0;
+}
+
+.navContent a,
+a:visited {
+  text-decoration: none;
+  color: #e3dac9;
+}
+
+.navContent span {
+  margin: 0 0 0 1rem;
+  cursor: pointer;
 }
 
 /* The Close Button */
@@ -21,11 +52,17 @@ nav {
   background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.modal-content {
+  margin-top: 270px !important;
+}
+
 .howTo,
-.leaderBoard {
+.leaderBoard,
+.credits {
   background-color: #fefefe;
   margin: auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  color: black;
 }

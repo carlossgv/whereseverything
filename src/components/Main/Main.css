@@ -1,0 +1,7 @@
+.Main {
+  margin-top: 2rem;
+  height: calc(100% - 50px);
+  height: -o-calc(100% - 100px); /* opera */
+  height: -webkit-calc(100% - 50px); /* google, safari */
+  height: -moz-calc(100% - 100px); /* firefox */
+}
