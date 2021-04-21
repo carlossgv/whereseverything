@@ -69,6 +69,8 @@ const ImageContainer = () => {
         optionsX: returnedCoordinates.optionsX,
         optionsY: returnedCoordinates.optionsY,
       });
+
+      
       setVisibility('');
     }
 
@@ -104,7 +106,6 @@ const ImageContainer = () => {
 
     setOptions(newOptionsArray);
 
-    console.log(newOptionsArray);
 
     //TODO: CHECK IF ALL STUFF IS LOCATED
     const isFinished = image.Image.checkIsFinished(newOptionsArray);
@@ -120,7 +121,10 @@ const ImageContainer = () => {
     setTime(time);
   };
 
+  console.log(coordinates.posX, coordinates.posY)
+
   return (
+    
     <div className="imageContainer" onMouseDown={handleOnMouseDown}>
       {isFinished && (
         <FinishContainer display={'block'} imageName={image.name} time={time} />

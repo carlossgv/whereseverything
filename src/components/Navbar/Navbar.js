@@ -12,7 +12,7 @@ function Navbar() {
       <div className="navContent">
         <div id="navLeft">
           <Link to="/">
-            <h1>WHERE IS EVERYTHING?</h1>
+            <h1>WHERE'S EVERYTHING?</h1>
           </Link>
         </div>
         <div className="navRight">

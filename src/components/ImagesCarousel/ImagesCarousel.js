@@ -36,7 +36,7 @@ const MyCarousel = () => {
       >
         {imageList.map((image) => {
           return (
-            <Link to={`/image/${image.name}`} key={image.name}>
+            <Link to={`image/${image.name}`} key={image.name}>
               <img className="carouselImg" src={image.url} alt={''} />
             </Link>
           );
