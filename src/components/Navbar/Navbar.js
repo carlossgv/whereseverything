@@ -53,6 +53,7 @@ function Navbar() {
                 &times;
               </span>
               <p>CREDITS</p>
+              <p>Art: Marija Tiurina (@marijatiurina)</p>
             </div>
           </div>
         </div>
