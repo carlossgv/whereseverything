@@ -1,5 +1,6 @@
 {
   "name": "whereseverything",
+  "homepage": "https://carlossgv.github.io/whereseverything/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
